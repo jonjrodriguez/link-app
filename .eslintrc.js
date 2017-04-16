@@ -30,9 +30,7 @@ module.exports = {
       'vue': 'never'
     }],
     // allow optionalDependencies
-    'import/no-extraneous-dependencies': ['error', {
-      'optionalDependencies': ['test/unit/index.js']
-    }],
+    'import/no-extraneous-dependencies': ['off', {}],
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     // trailing commas

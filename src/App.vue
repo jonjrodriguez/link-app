@@ -1,23 +1,44 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <router-view></router-view>
+  <div class="mdc-typography">
+    <toolbar fixed @toggleDrawer="toggleDrawer" />
+    <drawer ref="drawer" />
+
+    <div class="mdc-toolbar-fixed-adjust">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
+import Toolbar from './components/Toolbar';
+import Drawer from './components/Drawer';
+
 export default {
-  name: 'App'
+  name: 'App',
+
+  components: { Toolbar, Drawer },
+
+  methods: {
+    toggleDrawer() {
+      this.$refs.drawer.toggle();
+    }
+  }
 };
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="scss">
+  $mdc-theme-primary: #009688; /* Teal 500 */
+  $mdc-theme-accent: #ffd740; /* Amber A200 */
+  $mdc-theme-background: #fff; /* White */
+
+  @import "@material/layout-grid/mdc-layout-grid";
+  @import "@material/theme/mdc-theme";
+  @import "@material/typography/mdc-typography";
+  @import "@material/list/mdc-list";
+
+  a.material-icons {
+    text-decoration: none;
+    cursor: pointer;
+    padding: 0px 8px 0px 0px;
+  }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Hello</h1>
+    <h1 class="mdc-typography--display4" style="text-align:center">Hello</h1>
   </div>
 </template>
 
