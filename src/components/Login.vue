@@ -22,9 +22,11 @@
 
         <p>
           <button type="submit" class="mdc-button mdc-button--primary mdc-button--raised">Login</button>
+          <button type="button" class="mdc-button mdc-button--raised" @click="forgot">Forgot Password?</button>
         </p>
 
         <p v-show="error.message" class="mdc-typography--body1 invalid">{{ error.message }}</p>
+        <p v-show="success" class="mdc-typography--body1">{{ success }}</p>
       </form>
     </div>
   </div>
@@ -44,7 +46,8 @@ export default {
     return {
       email: '',
       password: '',
-      error: {}
+      error: {},
+      success: ''
     };
   },
 
@@ -53,6 +56,17 @@ export default {
       firebase.auth().signInWithEmailAndPassword(this.email, this.password)
         .then(() => {
           this.$router.push(this.$route.query.redirect || '/');
+        })
+        .catch((error) => {
+          this.error = error;
+        });
+    },
+
+    forgot() {
+      firebase.auth().sendPasswordResetEmail(this.email)
+        .then(() => {
+          this.error = {};
+          this.success = 'A password reset email has been sent.';
         })
         .catch((error) => {
           this.error = error;

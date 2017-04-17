@@ -3,6 +3,7 @@
     <div ref="textfield" :class="classes" :style="width ? `width: ${width}` : ''">
       <input v-if="!isTextarea"
         class="mdc-textfield__input"
+        :style="width ? `width: ${width}` : ''"
         :type="type"
         :id="id"
         :value="value"
