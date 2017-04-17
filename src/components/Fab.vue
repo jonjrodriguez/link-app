@@ -16,7 +16,7 @@ export default {
       required: true
     },
 
-    absolute: {
+    fixed: {
       type: Boolean,
       default: true
     }
@@ -28,7 +28,7 @@ export default {
         'mdc-fab',
         'material-icons',
         {
-          'app-fab--absolute': this.absolute
+          'app-fab--fixed': this.fixed
         }
       ];
     }
@@ -39,14 +39,14 @@ export default {
 <style lang="scss">
   @import "@material/fab/mdc-fab";
 
-  .app-fab--absolute {
-    position: absolute;
+  .app-fab--fixed {
+    position: fixed;
     bottom: 1rem;
     right: 1rem;
   }
 
   @media(min-width: 1024px) {
-    .app-fab--absolute {
+    .app-fab--fixed {
       bottom: 3rem;
       right: 5rem;
     }
