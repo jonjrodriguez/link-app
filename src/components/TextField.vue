@@ -6,6 +6,7 @@
         :type="type"
         :id="id"
         :value="value"
+        @input="$emit('input', $event.target.value)"
         :placeholder="fullWidth ? label : ''"
         :aria-label="fullWidth ? label : ''"
         :aria-controls="helptext ? `${id}-helptext` : ''"
@@ -39,6 +40,11 @@ export default {
   name: 'TextField',
 
   props: {
+    value: {
+      type: String,
+      default: ''
+    },
+
     id: {
       type: String,
       required: true
@@ -52,11 +58,6 @@ export default {
     label: {
       type: String,
       required: true
-    },
-
-    value: {
-      type: String,
-      default: ''
     },
 
     fullWidth: {
@@ -111,7 +112,6 @@ export default {
         'mdc-textfield',
         {
           'mdc-textfield--disabled': this.disabled,
-          'mdc-textfield--upgraded': this.value,
           'mdc-textfield--fullwidth': this.fullWidth,
           'mdc-textfield--multiline': this.isTextarea
         }

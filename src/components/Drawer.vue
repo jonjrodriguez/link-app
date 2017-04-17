@@ -1,7 +1,9 @@
 <template>
   <aside class="mdc-temporary-drawer">
     <nav class="mdc-temporary-drawer__drawer">
-      <div class="mdc-temporary-drawer__toolbar-spacer mdc-theme--primary-bg mdc-theme--text-primary-on-primary"></div>
+      <div class="mdc-temporary-drawer__toolbar-spacer mdc-theme--primary-bg mdc-theme--text-primary-on-primary">
+        <p class="mdc-typography--headline margin-0">LinkApp</p>
+      </div>
 
       <nav class="mdc-temporary-drawer__content mdc-list">
         <router-link to="/" exact @click.native="toggle" class="mdc-list-item">
@@ -19,7 +21,7 @@
 import { MDCTemporaryDrawer } from '@material/drawer';
 
 export default {
-  name: 'Menu',
+  name: 'Drawer',
 
   data() {
     return {

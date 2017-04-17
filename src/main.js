@@ -1,11 +1,20 @@
 import Vue from 'vue';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import App from './App';
 import router from './router';
-import Ripple from './directives/Ripple';
+
+const config = {
+  apiKey: 'AIzaSyChhGPqVlHA5YBF7LcD-4hqA82KYWtTEss',
+  authDomain: 'link-app-c59fc.firebaseapp.com',
+  databaseURL: 'https://link-app-c59fc.firebaseio.com',
+  projectId: 'link-app-c59fc',
+  storageBucket: 'link-app-c59fc.appspot.com',
+  messagingSenderId: '298714640623'
+};
+firebase.initializeApp(config);
 
 Vue.config.productionTip = false;
-
-Vue.directive('ripple', Ripple);
 
 /* eslint-disable no-new */
 new Vue({
