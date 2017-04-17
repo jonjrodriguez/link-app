@@ -34,6 +34,8 @@ module.exports = {
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     // trailing commas
-    'comma-dangle': ['error', 'never']
+    'comma-dangle': ['error', 'never'],
+    // no-param-reassign
+    'no-param-reassign': ["error", { "props": false }]
   }
 }

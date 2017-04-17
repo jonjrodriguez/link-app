@@ -28,13 +28,24 @@ export default {
 
 <style lang="scss">
   $mdc-theme-primary: #009688; /* Teal 500 */
-  $mdc-theme-accent: #ffd740; /* Amber A200 */
+  $mdc-theme-accent: #52c7b8;
   $mdc-theme-background: #fff; /* White */
 
   @import "@material/layout-grid/mdc-layout-grid";
   @import "@material/theme/mdc-theme";
   @import "@material/typography/mdc-typography";
   @import "@material/list/mdc-list";
+  @import "@material/button/mdc-button";
+  @import "@material/elevation/mdc-elevation";
+  @import "@material/ripple/mdc-ripple";
+
+  body {
+    margin: 0;
+  }
+
+  .margin-0 {
+    margin: 0;
+  }
 
   a.material-icons {
     text-decoration: none;

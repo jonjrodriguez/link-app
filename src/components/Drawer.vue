@@ -4,12 +4,12 @@
       <div class="mdc-temporary-drawer__toolbar-spacer mdc-theme--primary-bg mdc-theme--text-primary-on-primary"></div>
 
       <nav class="mdc-temporary-drawer__content mdc-list">
-        <a class="mdc-list-item mdc-temporary-drawer--selected" href="#">
-          <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">inbox</i>Inbox
-        </a>
-        <a class="mdc-list-item" href="#">
-          <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">star</i>Star
-        </a>
+        <router-link to="/" exact @click.native="toggle" class="mdc-list-item">
+          <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">link</i>Link Up
+        </router-link>
+        <router-link to="contacts" exact @click.native="toggle" class="mdc-list-item">
+          <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">contacts</i>Contacts
+        </router-link>
       </nav>
     </nav>
   </aside>
