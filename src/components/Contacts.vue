@@ -1,13 +1,27 @@
 <template>
-  <div class="mdc-layout-grid">
-    <div class="heading mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-      <h1 class="mdc-typography--display1 margin-0">Contacts</h1>
-    </div>
+  <div>
+    <feature-bar title="Contacts" />
+
+    <fab
+      icon="person_add"
+      @onClick="addNew"
+    />
   </div>
 </template>
 
 <script>
+import FeatureBar from './FeatureBar';
+import Fab from './Fab';
+
 export default {
-  name: 'Contacts'
+  name: 'Contacts',
+
+  components: { FeatureBar, Fab },
+
+  methods: {
+    addNew() {
+      // console.log('add new person');
+    }
+  }
 };
 </script>
