@@ -1,28 +1,26 @@
 <template>
-  <Layout>
-    <router-view
+  <transition :name="transitionName">
+    <router-view class="view"
       :contacts="contacts"
       :contact="contact"
       @view="viewContact"
       @save="saveContact"
       @delete="deleteContact" />
-  </Layout>
+  </transition>
 </template>
 
 <script>
 import firebase from 'firebase/app';
-import Layout from '@/components/Layout';
 
 export default {
   name: 'Contacts',
-
-  components: { Layout },
 
   data() {
     return {
       db: null,
       contacts: [],
-      contact: { name: '', number: '' }
+      contact: { name: '', number: '' },
+      transitionName: ''
     };
   },
 
@@ -37,6 +35,13 @@ export default {
 
   beforeDestroy() {
     this.db.off();
+  },
+
+  beforeRouteUpdate(to, from, next) {
+    const toDepth = to.path.split('/').filter(String).length;
+    const fromDepth = from.path.split('/').filter(String).length;
+    this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left';
+    next();
   },
 
   methods: {

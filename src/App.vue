@@ -1,6 +1,6 @@
 <template>
   <div class="mdc-typography">
-    <router-view></router-view>
+    <router-view />
   </div>
 </template>
 
@@ -37,37 +37,6 @@ export default {
   @import "@material/elevation/mdc-elevation";
   @import "@material/ripple/mdc-ripple";
 
-  body {
-    margin: 0;
-  }
-
-  .margin-0 {
-    margin: 0;
-  }
-
-  a.material-icons {
-    text-decoration: none;
-    cursor: pointer;
-    padding: 0px 8px 0px 0px;
-
-    .mdc-list-item > & {
-      padding: 0;
-    }
-  }
-
-  .invalid {
-    color: #d50000;
-  }
-
-  .mdc-list--two-line-icon-list .mdc-list-item__start-detail {
-    background: grey;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-  }
-
-  a.mdc-list-item {
-    cursor: pointer;
-  }
+  @import "./styles/base";
+  @import "./styles/transitions";
 </style>

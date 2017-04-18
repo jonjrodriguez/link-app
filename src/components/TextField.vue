@@ -129,7 +129,7 @@ export default {
   },
 
   beforeDestroy() {
-    this.textfield.destroy();
+    // this.textfield.destroy();
   }
 };
 </script>

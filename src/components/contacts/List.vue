@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <Layout>
     <fab icon="person_add" @click="viewContact" />
 
     <div class="mdc-layout-grid" v-show="contacts.length == 0">
@@ -26,7 +26,8 @@
       :title="`Delete ${contact.name}?`"
       accept-text="Delete"
       @accept="deleteContact" />
-  </div>
+
+  </Layout>
 </template>
 
 <script>
@@ -34,12 +35,13 @@ import Card from '@/components/Card';
 import CardAction from '@/components/CardAction';
 import Fab from '@/components/Fab';
 import MdcDialog from '@/components/Dialog';
+import Layout from '@/components/Layout';
 import Contact from './Contact';
 
 export default {
   name: 'ContactList',
 
-  components: { Card, CardAction, Contact, Fab, MdcDialog },
+  components: { Card, CardAction, Contact, Fab, Layout, MdcDialog },
 
   props: {
     contacts: {
