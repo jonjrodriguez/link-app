@@ -2,25 +2,29 @@
   <header :class="['mdc-toolbar', { 'mdc-toolbar--fixed': fixed }]">
     <div class="mdc-toolbar__row">
       <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
-        <a class="material-icons" @click="$emit('toggleDrawer')">menu</a>
-        <span class="mdc-toolbar__title">LinkApp</span>
+        <a class="material-icons" v-if="icon" @click="$emit('action')">{{ icon }}</a>
+        <span class="mdc-toolbar__title">{{ title }}</span>
       </section>
+
       <section class="mdc-toolbar__section mdc-toolbar__section--align-end mdc-toolbar__section--has-menu">
-        <mdc-menu />
+        <slot></slot>
       </section>
     </div>
   </header>
 </template>
 
 <script>
-import MdcMenu from './Menu';
-
 export default {
   name: 'Toolbar',
 
-  components: { MdcMenu },
-
   props: {
+    title: {
+      type: String,
+      required: true
+    },
+
+    icon: String,
+
     fixed: {
       type: Boolean,
       default: false
@@ -31,6 +35,10 @@ export default {
 
 <style lang="scss">
   @import "@material/toolbar/mdc-toolbar";
+
+  .mdc-toolbar__section > a {
+    cursor: pointer;
+  }
 
   .mdc-toolbar__section--has-menu {
     overflow: visible;

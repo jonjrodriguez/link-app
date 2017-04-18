@@ -1,23 +1,14 @@
 <template>
   <div class="mdc-typography">
-    <toolbar fixed @toggleDrawer="toggleDrawer" />
-    <drawer ref="drawer" />
-
-    <div class="mdc-toolbar-fixed-adjust">
-      <router-view></router-view>
-    </div>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import firebase from 'firebase/app';
-import Toolbar from './components/Toolbar';
-import Drawer from './components/Drawer';
 
 export default {
   name: 'App',
-
-  components: { Toolbar, Drawer },
 
   beforeCreate() {
     firebase.auth().onAuthStateChanged((user) => {
@@ -29,12 +20,6 @@ export default {
         this.$router.push(this.$route.query.redirect || '/');
       }
     });
-  },
-
-  methods: {
-    toggleDrawer() {
-      this.$refs.drawer.toggle();
-    }
   }
 };
 </script>
@@ -47,7 +32,6 @@ export default {
   @import "@material/layout-grid/mdc-layout-grid";
   @import "@material/theme/mdc-theme";
   @import "@material/typography/mdc-typography";
-  @import "@material/card/mdc-card";
   @import "@material/list/mdc-list";
   @import "@material/button/mdc-button";
   @import "@material/elevation/mdc-elevation";
@@ -65,9 +49,25 @@ export default {
     text-decoration: none;
     cursor: pointer;
     padding: 0px 8px 0px 0px;
+
+    .mdc-list-item > & {
+      padding: 0;
+    }
   }
 
   .invalid {
     color: #d50000;
+  }
+
+  .mdc-list--two-line-icon-list .mdc-list-item__start-detail {
+    background: grey;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+
+  a.mdc-list-item {
+    cursor: pointer;
   }
 </style>

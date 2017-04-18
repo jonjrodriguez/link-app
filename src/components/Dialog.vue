@@ -6,8 +6,8 @@
           {{ title }}
         </h2>
       </header>
-      <section v-if="$slots.default" id="dialog-description" class="mdc-dialog__body">
-        <slot></slot>
+      <section v-if="body" id="dialog-description" class="mdc-dialog__body">
+        {{ body }}
       </section>
       <footer class="mdc-dialog__footer">
         <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--cancel">{{ cancelText }}</button>
@@ -26,13 +26,16 @@ export default {
 
   props: {
     title: {
-      type: String,
-      default: ''
+      type: String
+    },
+
+    body: {
+      type: String
     },
 
     cancelText: {
       type: String,
-      default: 'Decline'
+      default: 'Cancel'
     },
 
     acceptText: {

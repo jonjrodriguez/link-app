@@ -1,9 +1,14 @@
 <template>
   <div>
-    <feature-bar title="Login" />
+    <toolbar
+      title="LinkApp"
+      fixed />
 
-    <div class="mdc-layout-grid">
+    <div class="mdc-toolbar-fixed-adjust mdc-layout-grid">
       <form @submit.prevent="signIn" class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+        <p v-show="error.message" class="mdc-typography--body1 invalid">{{ error.message }}</p>
+        <p v-show="success" class="mdc-typography--body1">{{ success }}</p>
+
         <text-field
           v-model="email"
           id="email"
@@ -24,9 +29,6 @@
           <button type="submit" class="mdc-button mdc-button--primary mdc-button--raised">Login</button>
           <button type="button" class="mdc-button mdc-button--raised" @click="forgot">Forgot Password?</button>
         </p>
-
-        <p v-show="error.message" class="mdc-typography--body1 invalid">{{ error.message }}</p>
-        <p v-show="success" class="mdc-typography--body1">{{ success }}</p>
       </form>
     </div>
   </div>
@@ -34,13 +36,13 @@
 
 <script>
 import firebase from 'firebase/app';
-import TextField from './TextField';
-import FeatureBar from './FeatureBar';
+import TextField from '@/components/TextField';
+import Toolbar from '@/components/Toolbar';
 
 export default {
   name: 'Login',
 
-  components: { TextField, FeatureBar },
+  components: { TextField, Toolbar },
 
   data() {
     return {

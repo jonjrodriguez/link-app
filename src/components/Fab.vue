@@ -1,5 +1,5 @@
 <template>
-  <button :class="classes" :aria-label="icon" @click="$emit('onClick')">
+  <button :class="classes" :aria-label="icon" @click="$emit('click')">
     <span class="mdc-fab__icon">
       {{ icon }}
     </span>
