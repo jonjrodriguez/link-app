@@ -15,15 +15,10 @@
     </div>
 
     <div class="mdc-layout-grid">
-      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12" v-for="location in locations">
-        <card
-          :title="location.location"
-          :subtitle="location.time">
-          <template slot="actions">
-            <card-action class="mdc-button--primary" text="View Attendees" />
-          </template>
-        </card>
-      </div>
+      <location
+        v-for="location in locations"
+        :location="location"
+        :key="location.key" />
     </div>
 
   </Layout>
@@ -34,11 +29,12 @@ import Card from '@/components/Card';
 import CardAction from '@/components/CardAction';
 import Fab from '@/components/Fab';
 import Layout from '@/components/Layout';
+import Location from './Location';
 
 export default {
   name: 'LocationList',
 
-  components: { Card, CardAction, Fab, Layout },
+  components: { Card, CardAction, Fab, Layout, Location },
 
   props: {
     locations: {

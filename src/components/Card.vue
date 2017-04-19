@@ -29,4 +29,18 @@ export default {
 
 <style lang="scss">
   @import "@material/card/mdc-card";
+
+  .mdc-card {
+    position: relative;
+  }
+
+  .mdc-card__actions {
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+
+    & > .material-icons {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+    }
+  }
 </style>
