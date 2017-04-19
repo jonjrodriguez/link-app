@@ -10,7 +10,8 @@
         @add="$router.push({ name: 'add_people' })"
         @select="toggleContact"
         @back="back"
-        @next="$router.push({ name: 'add_location' })" />
+        @next="$router.push({ name: 'add_location' })"
+        @save="saveEvent" />
     </transition>
   </div>
 </template>
@@ -67,6 +68,18 @@ export default {
     back() {
       this.selectedContacts = [];
       this.$router.push({ name: 'locations' });
+    },
+
+    saveEvent(event) {
+      const key = this.db.push({ createdAt: firebase.database.ServerValue.TIMESTAMP }).key;
+
+      this.loading = true;
+      this.db.child(key).update({ ...event, updatedAt: firebase.database.ServerValue.TIMESTAMP })
+        .then(() => {
+          this.loading = false;
+          this.$router.push({ name: 'locations' });
+          this.selectedContacts = [];
+        });
     },
 
     toggleContact(key) {

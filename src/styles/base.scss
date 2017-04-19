@@ -16,6 +16,11 @@ a.material-icons {
   }
 }
 
+.spacer {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
 .invalid {
   color: #d50000;
 }
@@ -30,4 +35,20 @@ a.material-icons {
 
 a.mdc-list-item {
   cursor: pointer;
+}
+
+.icon-grid {
+  & > .icon-grid__item {
+    grid-column-end: span 2;
+    border-radius: 4px;;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  & p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin: 0;
+  }
 }

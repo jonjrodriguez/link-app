@@ -3,6 +3,7 @@
     <toolbar
       :title="title"
       icon="close"
+      :loading="loading"
       @action="$emit('back')">
       <a class="mdc-typography--subheading1" @click="next">NEXT</a>
     </toolbar>
@@ -38,6 +39,11 @@ export default {
   components: { Checkbox, Contact, Toolbar },
 
   props: {
+    loading: {
+      type: Boolean,
+      default: false
+    },
+
     contacts: {
       type: Object,
       required: true
