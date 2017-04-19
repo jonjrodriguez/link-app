@@ -1,8 +1,8 @@
 <template>
-  <Layout>
+  <Layout :loading="loading">
     <fab icon="person_add" @click="viewContact" />
 
-    <div class="mdc-layout-grid" v-show="contacts.length == 0">
+    <div class="mdc-layout-grid" v-show="contacts.length == 0 && !loading">
       <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
         <card
           title="No Contacts"
@@ -47,6 +47,11 @@ export default {
     contacts: {
       type: Array,
       required: true
+    },
+
+    loading: {
+      type: Boolean,
+      default: false
     }
   },
 

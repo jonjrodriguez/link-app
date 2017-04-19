@@ -13,6 +13,21 @@ import Login from '@/components/Login';
 
 Vue.use(Router);
 
+let authCompleted = false;
+function getUser() {
+  return new Promise((resolve) => {
+    if (authCompleted) {
+      resolve(firebase.auth().currentUser);
+    }
+
+    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+      unsubscribe();
+      authCompleted = true;
+      resolve(user);
+    });
+  });
+}
+
 const router = new Router({
   mode: 'history',
   linkActiveClass: 'mdc-temporary-drawer--selected',
@@ -38,21 +53,21 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  const user = firebase.auth().currentUser;
-
-  if (user && to.path === '/login') {
-    return next('/');
-  }
-
-  if (user || to.matched.every(record => record.meta.allowAnonymous)) {
-    return next();
-  }
-
-  return next({
-    path: '/login',
-    query: {
-      redirect: to.fullPath
+  getUser().then((user) => {
+    if (user && to.path === '/login') {
+      return next('/');
     }
+
+    if (user || to.matched.every(record => record.meta.allowAnonymous)) {
+      return next();
+    }
+
+    return next({
+      path: '/login',
+      query: {
+        redirect: to.fullPath
+      }
+    });
   });
 });
 

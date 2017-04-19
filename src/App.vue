@@ -1,20 +1,25 @@
 <template>
   <div class="mdc-typography">
     <transition :name="transitionName">
-      <router-view />
+      <Layout v-if="loading" :loading="loading" />
+      <router-view v-else />
     </transition>
   </div>
 </template>
 
 <script>
 import firebase from 'firebase/app';
+import Layout from '@/components/Layout';
 
 export default {
   name: 'App',
 
+  components: { Layout },
+
   data() {
     return {
-      transitionName: ''
+      transitionName: '',
+      loading: true
     };
   },
 
@@ -35,15 +40,15 @@ export default {
       if (user && this.$route.path === '/login') {
         this.$router.push(this.$route.query.redirect || '/');
       }
+
+      this.loading = false;
     });
   }
 };
 </script>
 
 <style lang="scss">
-  $mdc-theme-primary: #009688; /* Teal 500 */
-  $mdc-theme-accent: #00bfa5;
-  $mdc-theme-background: #fff; /* White */
+  @import "./styles/variables";
 
   @import "@material/layout-grid/mdc-layout-grid";
   @import "@material/theme/mdc-theme";

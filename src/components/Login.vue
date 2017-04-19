@@ -1,8 +1,6 @@
 <template>
   <div>
-    <toolbar
-      title="LinkApp"
-      fixed />
+    <toolbar title="LinkApp" />
 
     <div class="mdc-toolbar-fixed-adjust mdc-layout-grid">
       <form @submit.prevent="signIn" class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">

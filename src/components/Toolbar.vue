@@ -4,6 +4,8 @@
       <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
         <a class="material-icons" v-if="icon" @click="$emit('action')">{{ icon }}</a>
         <span class="mdc-toolbar__title">{{ title }}</span>
+
+        <spinner :loading="loading" />
       </section>
 
       <section class="mdc-toolbar__section mdc-toolbar__section--align-end mdc-toolbar__section--has-menu">
@@ -14,8 +16,12 @@
 </template>
 
 <script>
+import Spinner from './Spinner';
+
 export default {
   name: 'Toolbar',
+
+  components: { Spinner },
 
   props: {
     title: {
@@ -25,9 +31,14 @@ export default {
 
     icon: String,
 
-    fixed: {
+    loading: {
       type: Boolean,
       default: false
+    },
+
+    fixed: {
+      type: Boolean,
+      default: true
     }
   }
 };
@@ -42,5 +53,9 @@ export default {
 
   .mdc-toolbar__section--has-menu {
     overflow: visible;
+  }
+
+  .v-spinner {
+    margin-left: 8px;
   }
 </style>

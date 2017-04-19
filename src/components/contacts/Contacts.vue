@@ -2,6 +2,7 @@
   <div>
     <transition :name="transitionName">
       <router-view
+        :loading="loading"
         :contacts="contacts"
         :contact="contact"
         @view="viewContact"
@@ -22,13 +23,19 @@ export default {
       db: null,
       contacts: [],
       contact: { name: '', number: '' },
-      transitionName: ''
+      transitionName: '',
+      loading: false
     };
   },
 
   created() {
+    this.loading = true;
     const user = firebase.auth().currentUser;
     this.db = firebase.database().ref(`contacts/${user.uid}`);
+
+    this.db.once('value').then(() => {
+      this.loading = false;
+    });
 
     this.db.on('child_added', data => this.contactAdded(data));
     this.db.on('child_changed', data => this.contactUpdated(data));

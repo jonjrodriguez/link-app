@@ -3,7 +3,7 @@
     <toolbar
       title="LinkApp"
       icon="menu"
-      fixed
+      :loading="loading"
       @action="toggleDrawer">
       <mdc-menu />
     </toolbar>
@@ -25,6 +25,13 @@ export default {
   name: 'Layout',
 
   components: { Drawer, MdcMenu, Toolbar },
+
+  props: {
+    loading: {
+      type: Boolean,
+      default: false
+    }
+  },
 
   methods: {
     toggleDrawer() {
