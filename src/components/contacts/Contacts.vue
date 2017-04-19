@@ -67,8 +67,8 @@ export default {
     saveContact(contact) {
       const { key, ...newContact } = contact;
 
-      this.db.child(key || this.db.push().key)
-        .update(newContact);
+      this.db.child(key || this.db.push({ createdAt: firebase.database.ServerValue.TIMESTAMP }).key)
+        .update({ ...newContact, updatedAt: firebase.database.ServerValue.TIMESTAMP });
 
       this.contact = { name: '', number: '' };
       this.$router.push({ name: 'contacts' });
