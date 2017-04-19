@@ -3,7 +3,7 @@
     <toolbar
       :title="title"
       icon="close"
-      @action="$router.push({ name: 'locations' })">
+      @action="$emit('back')">
       <a class="mdc-typography--subheading1" @click="next">NEXT</a>
     </toolbar>
 

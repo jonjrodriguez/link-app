@@ -3,7 +3,7 @@
     <toolbar
       title="Add Location"
       icon="arrow_back"
-      @action="$router.back()">
+      @action="$router.push({ name: 'add_people' })">
       <a class="mdc-typography--subheading1" @click="save">SAVE</a>
     </toolbar>
 

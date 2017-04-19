@@ -9,6 +9,7 @@
         :selectedContacts="selectedContacts"
         @add="$router.push({ name: 'add_people' })"
         @select="toggleContact"
+        @back="back"
         @next="$router.push({ name: 'add_location' })" />
     </transition>
   </div>
@@ -63,6 +64,11 @@ export default {
   },
 
   methods: {
+    back() {
+      this.selectedContacts = [];
+      this.$router.push({ name: 'locations' });
+    },
+
     toggleContact(key) {
       const index = this.selectedContacts.indexOf(key);
 

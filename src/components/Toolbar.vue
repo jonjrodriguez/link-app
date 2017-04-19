@@ -2,7 +2,7 @@
   <header :class="['mdc-toolbar', { 'mdc-toolbar--fixed': fixed }]">
     <div class="mdc-toolbar__row">
       <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
-        <a class="material-icons" v-if="icon" @click="$emit('action')">{{ icon }}</a>
+        <a class="material-icons" v-if="icon" @click="$emit('action')" aria-hidden="true">{{ icon }}</a>
         <span class="mdc-toolbar__title">{{ title }}</span>
 
         <spinner :loading="loading" />
