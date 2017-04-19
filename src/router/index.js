@@ -4,6 +4,8 @@ import firebase from 'firebase/app';
 
 import Locations from '@/components/locations/Locations';
 import LocationList from '@/components/locations/List';
+import AddPeople from '@/components/locations/AddPeople';
+import AddLocation from '@/components/locations/AddLocation';
 
 import Contacts from '@/components/contacts/Contacts';
 import ContactList from '@/components/contacts/List';
@@ -36,7 +38,9 @@ const router = new Router({
       path: '/',
       component: Locations,
       children: [
-        { path: '', name: 'locations', component: LocationList }
+        { path: '', name: 'locations', component: LocationList },
+        { path: 'add', name: 'add_people', component: AddPeople },
+        { path: 'add/location', name: 'add_location', component: AddLocation }
       ]
     },
     {

@@ -1,18 +1,23 @@
 <template>
 <div>
-  <a class="mdc-list-item" v-ripple @click="$emit('view')">
+  <a class="mdc-list-item" v-ripple @click="$emit('click')">
+
     <span class="mdc-list-item__start-detail">
-      <i class="material-icons" aria-hidden="true">person</i>
+      <i class="material-icons" aria-hidden="true">{{ startIcon }}</i>
     </span>
+
     <span class="mdc-list-item__text">
       {{ contact.name }}
       <span class="mdc-list-item__text__secondary">{{ contact.number }}</span>
     </span>
-    <a @click.stop="$emit('delete')"
-      class="mdc-list-item__end-detail material-icons"
-      aria-label="Delete from contacts" title="Delete from contacts">
-      close
-    </a>
+
+    <slot name="end-detail">
+      <a v-show="endIcon" @click.stop="$emit('action')"
+        class="mdc-list-item__end-detail material-icons">
+        {{ endIcon }}
+      </a>
+    </slot>
+
   </a>
 
   <hr role="separator" class="mdc-list-divider" />
@@ -31,6 +36,16 @@ export default {
     contact: {
       type: Object,
       required: true
+    },
+
+    startIcon: {
+      type: String,
+      default: 'person'
+    },
+
+    endIcon: {
+      type: String,
+      default: ''
     }
   }
 };

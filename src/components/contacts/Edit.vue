@@ -4,7 +4,7 @@
       :title="title"
       icon="close"
       fixed
-      @action="$router.push({ name: 'contacts' })">
+      @action="$router.back()">
       <a class="mdc-typography--subheading1" @click="editContact">SAVE</a>
     </toolbar>
 

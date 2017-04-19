@@ -18,8 +18,9 @@
       <contact v-for="(contact, index) in contacts"
         :contact="contact"
         :key="contact.key"
-        @view="viewContact(index)"
-        @delete="confirmDelete(index)" />
+        end-icon="close"
+        @click="viewContact(index)"
+        @action="confirmDelete(index)" />
     </div>
 
     <mdc-dialog ref="deleteDialog"

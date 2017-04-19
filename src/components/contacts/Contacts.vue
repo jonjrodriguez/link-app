@@ -71,7 +71,7 @@ export default {
         .update({ ...newContact, updatedAt: firebase.database.ServerValue.TIMESTAMP });
 
       this.contact = { name: '', number: '' };
-      this.$router.push({ name: 'contacts' });
+      this.$router.back();
     },
 
     deleteContact(key) {
