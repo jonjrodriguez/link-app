@@ -1,12 +1,14 @@
 <template>
-  <transition :name="transitionName">
-    <router-view class="view"
-      :contacts="contacts"
-      :contact="contact"
-      @view="viewContact"
-      @save="saveContact"
-      @delete="deleteContact" />
-  </transition>
+  <div>
+    <transition :name="transitionName">
+      <router-view
+        :contacts="contacts"
+        :contact="contact"
+        @view="viewContact"
+        @save="saveContact"
+        @delete="deleteContact" />
+    </transition>
+  </div>
 </template>
 
 <script>

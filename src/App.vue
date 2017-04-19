@@ -1,6 +1,8 @@
 <template>
   <div class="mdc-typography">
-    <router-view />
+    <transition :name="transitionName">
+      <router-view />
+    </transition>
   </div>
 </template>
 
@@ -9,6 +11,20 @@ import firebase from 'firebase/app';
 
 export default {
   name: 'App',
+
+  data() {
+    return {
+      transitionName: ''
+    };
+  },
+
+  watch: {
+    $route(to, from) {
+      const toDepth = to.path.split('/').filter(String).length;
+      const fromDepth = from.path.split('/').filter(String).length;
+      this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left';
+    }
+  },
 
   beforeCreate() {
     firebase.auth().onAuthStateChanged((user) => {
