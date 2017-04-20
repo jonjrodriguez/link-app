@@ -5,6 +5,7 @@
         :loading="loading"
         :locations="locations"
         :location="location"
+        :invitees="invitees"
         :contacts="contacts"
         :selectedContacts="selectedContacts"
         :offset="offset"
@@ -27,20 +28,23 @@ export default {
   data() {
     return {
       db: null,
+      inviteeDb: null,
       locations: [],
+      invitees: {},
       location: {},
       contacts: {},
       selectedContacts: [],
       transitionName: '',
       offset: 0,
-      loading: false
+      loading: true
     };
   },
 
   created() {
-    this.loading = true;
     const user = firebase.auth().currentUser;
+
     this.db = firebase.database().ref(`locations/${user.uid}`);
+    this.inviteeDb = firebase.database().ref(`invitees/${user.uid}`);
 
     const contactRef = firebase.database().ref(`contacts/${user.uid}`);
     contactRef.once('value').then((snap) => {
@@ -59,6 +63,10 @@ export default {
     this.db.on('child_added', data => this.locationAdded(data));
     this.db.on('child_changed', data => this.locationUpdated(data));
     this.db.on('child_removed', data => this.locationDeleted(data));
+
+    this.inviteeDb.on('child_added', data => this.inviteesAdded(data));
+    this.inviteeDb.on('child_changed', data => this.inviteesUpdated(data));
+    this.inviteeDb.on('child_removed', data => this.inviteesDeleted(data));
   },
 
   beforeDestroy() {
@@ -82,16 +90,28 @@ export default {
       const key = this.db.push({ createdAt: firebase.database.ServerValue.TIMESTAMP }).key;
 
       this.loading = true;
-      this.db.child(key).update({
+      const promise = this.db.child(key).update({
         ...location,
         updatedAt: firebase.database.ServerValue.TIMESTAMP,
         time: (location.time * (60 * 1000)) + new Date().getTime() + this.offset
-      })
+      });
+
+      promise
+        .then(() => this.saveInvitees(key))
         .then(() => {
           this.loading = false;
           this.$router.push({ name: 'locations' });
           this.selectedContacts = [];
         });
+    },
+
+    saveInvitees(key) {
+      const invitees = {};
+      this.selectedContacts.forEach((contact) => {
+        invitees[contact] = '';
+      });
+
+      return this.inviteeDb.child(key).set(invitees);
     },
 
     toggleContact(key) {
@@ -105,15 +125,16 @@ export default {
     },
 
     deleteLocation(key) {
+      this.inviteeDb.child(key).remove();
       this.db.child(key).remove();
     },
 
     locationAdded(data) {
       const location = data.val();
       location.key = data.key;
-      location.offset = this.offset;
 
       this.locations.push(location);
+      this.$set(this.invitees, data.key, {});
     },
 
     locationUpdated(data) {
@@ -124,6 +145,18 @@ export default {
     locationDeleted(data) {
       const index = this.locations.findIndex(location => location.key === data.key);
       this.locations.splice(index, 1);
+    },
+
+    inviteesAdded(data) {
+      this.$set(this.invitees, data.key, data.val());
+    },
+
+    inviteesUpdated(data) {
+      this.invitees[data.key] = data.val();
+    },
+
+    inviteesDeleted(data) {
+      delete this.invitees[data.key];
     }
   }
 };

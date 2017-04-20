@@ -18,6 +18,7 @@
       <location
         v-for="(location, index) in sortedLocations"
         :location="location"
+        :invitees="invitees[location.key]"
         :key="location.key"
         :offset="offset"
         @delete="confirmDelete(index)" />
@@ -47,6 +48,11 @@ export default {
   props: {
     locations: {
       type: Array,
+      required: true
+    },
+
+    invitees: {
+      type: Object,
       required: true
     },
 

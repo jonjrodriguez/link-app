@@ -3,6 +3,9 @@
     <card
       :title="location.place"
       :subtitle="location.time | timeFrom(now)">
+
+      <p>{{ attendingCount }} going ({{ pendingCount }} pending)</p>
+
       <template slot="actions" class="border">
         <card-action class="mdc-button--primary" text="View Attendees" />
         <a class="material-icons" aria-hidden="true" @click="$emit('delete')">close</a>
@@ -26,6 +29,11 @@ export default {
       required: true
     },
 
+    invitees: {
+      type: Object,
+      required: true
+    },
+
     offset: {
       type: Number,
       default: 0
@@ -35,6 +43,18 @@ export default {
   computed: {
     now() {
       return new Date().getTime() + this.offset;
+    },
+
+    inviteeCount() {
+      return Object.keys(this.invitees).length;
+    },
+
+    pendingCount() {
+      return Object.values(this.invitees).filter(invitee => invitee === '').length;
+    },
+
+    attendingCount() {
+      return Object.values(this.invitees).filter(invitee => invitee === true).length;
     }
   }
 };
