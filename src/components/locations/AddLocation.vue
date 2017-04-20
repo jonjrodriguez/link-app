@@ -10,7 +10,7 @@
 
     <div class="mdc-toolbar-fixed-adjust">
       <location-form
-        :event="event"
+        :location="location"
         :error="error"
         @submit="save" />
 
@@ -36,7 +36,7 @@ import Toolbar from '@/components/Toolbar';
 import LocationForm from './Form';
 
 export default {
-  name: 'AddLocaation',
+  name: 'AddLocation',
 
   components: { Toolbar, LocationForm },
 
@@ -59,7 +59,7 @@ export default {
 
   data() {
     return {
-      event: { location: '', time: '' },
+      location: { place: '', time: 0 },
       error: ''
     };
   },
@@ -72,13 +72,13 @@ export default {
 
   methods: {
     save() {
-      if (!this.event.location || !this.event.time) {
+      if (!this.location.place) {
         this.error = 'Add a location.';
         return;
       }
 
       this.error = '';
-      this.$emit('save', this.event);
+      this.$emit('save', this.location);
     }
   }
 };

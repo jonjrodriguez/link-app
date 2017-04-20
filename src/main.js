@@ -4,6 +4,12 @@ import 'firebase/auth';
 import 'firebase/database';
 import App from './App';
 import router from './router';
+import * as filters from './filters';
+
+// register global utility filters.
+Object.keys(filters).forEach((key) => {
+  Vue.filter(key, filters[key]);
+});
 
 const config = {
   apiKey: 'AIzaSyChhGPqVlHA5YBF7LcD-4hqA82KYWtTEss',

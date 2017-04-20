@@ -7,11 +7,13 @@
         :location="location"
         :contacts="contacts"
         :selectedContacts="selectedContacts"
+        :offset="offset"
         @add="$router.push({ name: 'add_people' })"
         @select="toggleContact"
         @back="back"
         @next="$router.push({ name: 'add_location' })"
-        @save="saveEvent" />
+        @save="saveLocation"
+        @delete="deleteLocation" />
     </transition>
   </div>
 </template>
@@ -30,6 +32,7 @@ export default {
       contacts: {},
       selectedContacts: [],
       transitionName: '',
+      offset: 0,
       loading: false
     };
   },
@@ -42,6 +45,11 @@ export default {
     const contactRef = firebase.database().ref(`contacts/${user.uid}`);
     contactRef.once('value').then((snap) => {
       this.contacts = snap.val();
+    });
+
+    const offsetRef = firebase.database().ref('.info/serverTimeOffset');
+    offsetRef.on('value', (snap) => {
+      this.offset = snap.val();
     });
 
     this.db.once('value').then(() => {
@@ -70,11 +78,15 @@ export default {
       this.$router.push({ name: 'locations' });
     },
 
-    saveEvent(event) {
+    saveLocation(location) {
       const key = this.db.push({ createdAt: firebase.database.ServerValue.TIMESTAMP }).key;
 
       this.loading = true;
-      this.db.child(key).update({ ...event, updatedAt: firebase.database.ServerValue.TIMESTAMP })
+      this.db.child(key).update({
+        ...location,
+        updatedAt: firebase.database.ServerValue.TIMESTAMP,
+        time: (location.time * (60 * 1000)) + new Date().getTime() + this.offset
+      })
         .then(() => {
           this.loading = false;
           this.$router.push({ name: 'locations' });
@@ -92,9 +104,14 @@ export default {
       }
     },
 
+    deleteLocation(key) {
+      this.db.child(key).remove();
+    },
+
     locationAdded(data) {
       const location = data.val();
       location.key = data.key;
+      location.offset = this.offset;
 
       this.locations.push(location);
     },

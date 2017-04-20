@@ -1,7 +1,7 @@
 <template>
   <div>
     <toolbar
-      :title="title"
+      :title="$route.name | titleCase"
       icon="close"
       fixed
       @action="$router.back()">
@@ -60,16 +60,6 @@ export default {
 
   created() {
     this.newContact = { ...this.contact };
-  },
-
-  computed: {
-    title() {
-      return this.$route.name
-        .replace('_', ' ')
-        .split(' ')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
-    }
   },
 
   methods: {

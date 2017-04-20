@@ -40,7 +40,7 @@ export default {
     & > .material-icons {
       position: absolute;
       top: 8px;
-      right: 8px;
+      right: 0;
     }
   }
 </style>

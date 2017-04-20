@@ -8,22 +8,24 @@
       <a class="mdc-typography--subheading1" @click="next">NEXT</a>
     </toolbar>
 
-    <div class="mdc-toolbar-fixed-adjust mdc-list mdc-list--two-line mdc-list--avatar-list mdc-list--two-line-icon-list">
-      <p v-show="error" class="mdc-typography--body1 invalid">{{ error }}</p>
+    <div class="mdc-toolbar-fixed-adjust">
+      <div class="mdc-list mdc-list--two-line mdc-list--avatar-list mdc-list--two-line-icon-list">
+        <p v-show="error" class="mdc-typography--body1 invalid">{{ error }}</p>
 
-      <contact
-        :contact="{ name: 'Add New Contact' }"
-        start-icon="person_add"
-        @click="$router.push({ name: 'add_contact' })" />
+        <contact
+          :contact="{ name: 'Add New Contact' }"
+          start-icon="person_add"
+          @click="$router.push({ name: 'add_contact' })" />
 
-      <contact v-for="(contact, key) in contacts"
-        :contact="contact"
-        :key="key"
-        @click="$emit('select', key)">
-        <checkbox slot="end-detail"
-          class="mdc-list-item__end-detail"
-          :checked="selectedContacts.includes(key)" />
-      </contact>
+        <contact v-for="(contact, key) in contacts"
+          :contact="contact"
+          :key="key"
+          @click="$emit('select', key)">
+          <checkbox slot="end-detail"
+            class="mdc-list-item__end-detail"
+            :checked="selectedContacts.includes(key)" />
+        </contact>
+      </div>
     </div>
   </div>
 </template>

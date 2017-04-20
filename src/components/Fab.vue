@@ -43,6 +43,7 @@ export default {
     position: fixed;
     bottom: 1rem;
     right: 1rem;
+    z-index: 100;
   }
 
   @media(min-width: 1024px) {

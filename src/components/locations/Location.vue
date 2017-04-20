@@ -1,11 +1,11 @@
 <template>
   <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
     <card
-      :title="location.location"
-      :subtitle="location.time">
+      :title="location.place"
+      :subtitle="location.time | timeFrom(now)">
       <template slot="actions" class="border">
-        <card-action class="mdc-button--primary" text="View Attendees" @action="test" />
-        <i class="material-icons" aria-hidden="true" @click="test">close</i>
+        <card-action class="mdc-button--primary" text="View Attendees" />
+        <a class="material-icons" aria-hidden="true" @click="$emit('delete')">close</a>
       </template>
     </card>
   </div>
@@ -24,13 +24,17 @@ export default {
     location: {
       type: Object,
       required: true
+    },
+
+    offset: {
+      type: Number,
+      default: 0
     }
   },
 
-  methods: {
-    test() {
-      // eslint-disable-next-line
-      console.log('Test');
+  computed: {
+    now() {
+      return new Date().getTime() + this.offset;
     }
   }
 };
