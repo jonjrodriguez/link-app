@@ -32,7 +32,7 @@ export default {
       inviteeDb: null,
       locations: [],
       invitees: {},
-      location: {},
+      location: { invitees: {} },
       contacts: {},
       selectedContacts: [],
       transitionName: '',

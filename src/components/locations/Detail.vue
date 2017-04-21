@@ -1,7 +1,7 @@
 <template>
   <Layout
     :loading="loading"
-    icon="close"
+    icon="arrow_back"
     action
     @action="$emit('back')">
 

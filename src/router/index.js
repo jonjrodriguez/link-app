@@ -34,6 +34,9 @@ function getUser() {
 const router = new Router({
   mode: 'history',
   linkActiveClass: 'mdc-temporary-drawer--selected',
+  scrollBehavior() {
+    return { x: 0, y: 0 };
+  },
   routes: [
     {
       path: '/',
