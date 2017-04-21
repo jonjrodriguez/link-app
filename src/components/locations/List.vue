@@ -26,7 +26,7 @@
     </div>
 
     <mdc-dialog ref="deleteDialog"
-      :title="`Delete ${location.place}?`"
+      :title="`Delete ${location.place.name}?`"
       :body="deleteText"
       accept-text="Delete"
       @accept="deleteLocation" />
@@ -71,7 +71,7 @@ export default {
 
   data() {
     return {
-      location: { place: '', invitees: [] }
+      location: { place: {}, invitees: [] }
     };
   },
 

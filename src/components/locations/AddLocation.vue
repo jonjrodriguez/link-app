@@ -59,7 +59,7 @@ export default {
 
   data() {
     return {
-      location: { place: '', time: 0 },
+      location: { place: {}, time: 0 },
       error: ''
     };
   },
@@ -72,7 +72,7 @@ export default {
 
   methods: {
     save() {
-      if (!this.location.place) {
+      if (!this.location.place.place_id) {
         this.error = 'Add a location.';
         return;
       }

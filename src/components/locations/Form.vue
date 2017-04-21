@@ -4,12 +4,12 @@
       <p v-show="error" class="mdc-typography--body1 invalid" style="margin: 0">{{ error }}</p>
 
       <form @submit.prevent="$emit('submit')">
-        <text-field
+        <google-autocomplete
           v-model="location.place"
           id="place"
           label="Where are you going?"
-          width="100%"
-          required />
+          placeholder="Search"
+        />
 
         <mdc-select
           v-model="location.time"
@@ -27,12 +27,12 @@
 <script>
 import MdcSelect from '@/components/Select';
 import TextField from '@/components/TextField';
-
+import GoogleAutocomplete from '@/components/GoogleAutocomplete';
 
 export default {
   name: 'LocationForm',
 
-  components: { MdcSelect, TextField },
+  components: { MdcSelect, TextField, GoogleAutocomplete },
 
   props: {
     location: {

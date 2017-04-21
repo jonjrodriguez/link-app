@@ -8,7 +8,7 @@
     <div class="mdc-layout-grid">
       <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
         <card
-          :title="location.place"
+          :title="location.place.name"
           :subtitle="location.time | calendar">
 
           <template slot="actions">

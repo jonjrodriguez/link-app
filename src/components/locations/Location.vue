@@ -1,7 +1,7 @@
 <template>
   <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
     <card
-      :title="location.place"
+      :title="location.place.name"
       :subtitle="location.time | fromNow(now)">
 
       <p>{{ attendingCount }} going ({{ pendingCount }} pending)</p>
