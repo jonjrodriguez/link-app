@@ -1,14 +1,14 @@
 <template>
   <div>
     <toolbar
-      title="LinkApp"
-      icon="menu"
+      :title="title"
+      :icon="icon"
       :loading="loading"
-      @action="toggleDrawer">
+      @action="doAction">
       <mdc-menu />
     </toolbar>
 
-    <drawer ref="drawer" />
+    <drawer v-show="!action" ref="drawer" />
 
     <div class="mdc-toolbar-fixed-adjust">
       <slot></slot>
@@ -27,14 +27,34 @@ export default {
   components: { Drawer, MdcMenu, Toolbar },
 
   props: {
+    title: {
+      type: String,
+      default: 'LinkApp'
+    },
+
+    icon: {
+      type: String,
+      default: 'menu'
+    },
+
     loading: {
+      type: Boolean,
+      default: false
+    },
+
+    action: {
       type: Boolean,
       default: false
     }
   },
 
   methods: {
-    toggleDrawer() {
+    doAction() {
+      if (this.action) {
+        this.$emit('action');
+        return;
+      }
+
       this.$refs.drawer.toggle();
     }
   }

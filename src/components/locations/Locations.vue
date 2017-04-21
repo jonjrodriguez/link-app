@@ -9,6 +9,7 @@
         :contacts="contacts"
         :selectedContacts="selectedContacts"
         :offset="offset"
+        @view="viewLocation"
         @add="$router.push({ name: 'add_people' })"
         @select="toggleContact"
         @back="back"
@@ -82,8 +83,16 @@ export default {
 
   methods: {
     back() {
-      this.selectedContacts = [];
       this.$router.push({ name: 'locations' });
+      this.selectedContacts = [];
+      this.location = {};
+    },
+
+    viewLocation(index) {
+      this.location = this.locations[index];
+      this.$set(this.location, 'invitees', this.invitees[this.location.key]);
+
+      this.$router.push({ name: 'view_location' });
     },
 
     saveLocation(location) {

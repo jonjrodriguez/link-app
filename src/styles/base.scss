@@ -25,6 +25,10 @@ a.material-icons {
   color: #d50000;
 }
 
+.mdc-button--active {
+  background: rgba(0, 150, 136, 0.12);
+}
+
 .mdc-list--two-line-icon-list .mdc-list-item__start-detail {
   background: grey;
   display: inline-flex;

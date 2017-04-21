@@ -25,6 +25,8 @@ module.exports = {
     }
   },
   module: {
+    // https://github.com/webpack/webpack/issues/3128
+    noParse: [/moment.js/],
     rules: [
       {
         test: /\.(js|vue)$/,

@@ -2,13 +2,13 @@
   <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
     <card
       :title="location.place"
-      :subtitle="location.time | timeFrom(now)">
+      :subtitle="location.time | fromNow(now)">
 
       <p>{{ attendingCount }} going ({{ pendingCount }} pending)</p>
 
-      <template slot="actions" class="border">
-        <card-action class="mdc-button--primary" text="View Attendees" />
-        <a class="material-icons" aria-hidden="true" @click="$emit('delete')">close</a>
+      <template slot="actions">
+        <card-action class="mdc-button--primary" text="View Attendees" @action="$emit('view')" />
+        <a class="material-icons" v-if="respondedCount === 0" aria-hidden="true" @click="$emit('delete')">close</a>
       </template>
     </card>
   </div>
@@ -55,6 +55,10 @@ export default {
 
     attendingCount() {
       return Object.values(this.invitees).filter(invitee => invitee === true).length;
+    },
+
+    respondedCount() {
+      return Object.values(this.invitees).filter(invitee => invitee !== '').length;
     }
   }
 };

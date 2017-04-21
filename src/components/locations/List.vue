@@ -21,11 +21,13 @@
         :invitees="invitees[location.key]"
         :key="location.key"
         :offset="offset"
+        @view="$emit('view', index)"
         @delete="confirmDelete(index)" />
     </div>
 
     <mdc-dialog ref="deleteDialog"
       :title="`Delete ${location.place}?`"
+      :body="deleteText"
       accept-text="Delete"
       @accept="deleteLocation" />
 
@@ -69,23 +71,37 @@ export default {
 
   data() {
     return {
-      location: { place: '' }
+      location: { place: '', invitees: [] }
     };
   },
 
   computed: {
     sortedLocations() {
       return this.locations.sort((a, b) => b.time - a.time);
+    },
+
+    respondedCount() {
+      return Object.values(this.location.invitees).filter(invitee => invitee !== '').length;
+    },
+
+    deleteText() {
+      return 'You can still delete this while no one has responded.';
     }
   },
 
   methods: {
     confirmDelete(index) {
       this.location = this.locations[index];
+      this.location.invitees = this.invitees[this.location.key];
+
       this.$refs.deleteDialog.open();
     },
 
     deleteLocation() {
+      if (this.respondedCount > 0) {
+        return;
+      }
+
       this.$emit('delete', this.location.key);
       this.location = {};
     }
