@@ -103,7 +103,7 @@ export default {
       }
 
       this.$emit('delete', this.location.key);
-      this.location = {};
+      this.location = { place: {} };
     }
   }
 };

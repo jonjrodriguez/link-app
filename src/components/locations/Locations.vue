@@ -96,17 +96,16 @@ export default {
     },
 
     saveLocation(location) {
-      const key = this.db.push({ createdAt: firebase.database.ServerValue.TIMESTAMP }).key;
-
       this.loading = true;
-      const promise = this.db.child(key).update({
+
+      const newLocation = this.db.push({
         ...location,
+        createdAt: firebase.database.ServerValue.TIMESTAMP,
         updatedAt: firebase.database.ServerValue.TIMESTAMP,
         time: (location.time * (60 * 1000)) + new Date().getTime() + this.offset
       });
 
-      promise
-        .then(() => this.saveInvitees(key))
+      this.saveInvitees(newLocation.key)
         .then(() => {
           this.loading = false;
           this.$router.push({ name: 'locations' });
