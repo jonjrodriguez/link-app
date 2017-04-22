@@ -22,7 +22,7 @@
         :aria-label="fullWidth ? label : ''">
       </textarea>
 
-      <label v-if="!fullWidth" class="mdc-textfield__label" :for="id">{{ label }}</label>
+      <label v-if="!fullWidth" :class="['mdc-textfield__label', { 'mdc-textfield__label--float-above': focused }]" :for="id">{{ label }}</label>
     </div>
 
     <p v-if="helptext"
@@ -103,7 +103,8 @@ export default {
 
   data() {
     return {
-      textfield: null
+      textfield: null,
+      focused: false
     };
   },
 
@@ -121,6 +122,14 @@ export default {
 
     isTextarea() {
       return this.type === 'textarea';
+    }
+  },
+
+  watch: {
+    value() {
+      if (this.value !== '') {
+        this.focused = true;
+      }
     }
   },
 

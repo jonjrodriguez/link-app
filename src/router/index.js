@@ -13,6 +13,7 @@ import ContactList from '@/components/contacts/List';
 import EditContact from '@/components/contacts/Edit';
 
 import Login from '@/components/Login';
+import Settings from '@/components/Settings';
 
 Vue.use(Router);
 
@@ -57,6 +58,7 @@ const router = new Router({
         { path: 'edit', name: 'edit_contact', component: EditContact }
       ]
     },
+    { path: '/settings', name: 'settings', component: Settings },
     { path: '/login', name: 'login', component: Login, meta: { allowAnonymous: true } }
   ]
 });

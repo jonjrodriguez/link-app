@@ -2,10 +2,10 @@ const functions = require('firebase-functions');
 const moment = require('moment');
 
 const twilioSid = functions.config().twilio.sid;
-const twilioNumber = functions.config().twilio.number;
 const twilioAuthToken = functions.config().twilio.token;
 
-const client = require('twilio')(twilioSid, twilioAuthToken);
+const twilio = require('twilio');
+const client = twilio(twilioSid, twilioAuthToken);
 
 exports.textInvitees = functions.database.ref('/locations/{uid}/{locationId}')
   .onWrite((event) => {
@@ -27,14 +27,18 @@ exports.textInvitees = functions.database.ref('/locations/{uid}/{locationId}')
     const location = event.data.val();
 
     const inviteesRef = event.data.ref.root.child(`invitees/${uid}/${locationId}`);
+    const userRef = event.data.ref.root.child(`users/${uid}`);
     const contactsRef = event.data.ref.root.child(`contacts/${uid}`);
 
     return inviteesRef.once('value').then((snap) => {
-      snap.forEach((childSnap) => {
-        contactsRef.child(childSnap.key).once('value').then((contactSnap) => {
-          sendMessage(location, contactSnap.val(), (err, response) => {
-            // sid
-            console.log('Message sent', response);
+      userRef.once('value').then((userSnap) => {
+        const user = userSnap.val();
+
+        snap.forEach((childSnap) => {
+          contactsRef.child(childSnap.key).once('value').then((contactSnap) => {
+            sendMessage(location, user, contactSnap.val(), (err, response) => {
+              console.log('Message sent', response);
+            });
           });
         });
       });
@@ -47,24 +51,28 @@ exports.confirmInvite = functions.https.onRequest((req, res) => {
     return;
   }
 
-  // MessageSid
   console.log(req.body);
 
-  res.status(200).send("Ok, see you then.");
+  message = 'Ok, see you then.';
+
+  const twiml = new twilio.TwimlResponse();
+  twiml.message(message);
+  res.writeHead(200, { 'Content-Type':'text/xml' });
+  res.end(twiml.toString());
 });
 
-function sendMessage(location, contact, cb) {
+function sendMessage(location, from, contact, cb) {
   const options = {
-    to: '+19172026936',
-    from: twilioNumber,
-    body: formatBody(location, contact)
+    to: contact.e164,
+    from: from.e164,
+    body: formatBody(location, from, contact)
   };
 
   client.messages.create(options, cb);
 }
 
-function formatBody(location, contact) {
+function formatBody(location, from, contact) {
   const time = moment(location.time).calendar().toLowerCase();
 
-  return `Hey ${contact.name}. I'm going to ${location.place.name} ${time}. Wanna join?`
+  return `Hey ${contact.name}, it's ${from.name}. I'm going to ${location.place.name} ${time}. Wanna join? Just reply yes or no.`
 }

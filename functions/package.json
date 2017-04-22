@@ -8,7 +8,5 @@
     "twilio": "^2.11.1"
   },
   "private": true,
-  "devDependencies": {
-    "sinon": "^2.1.0"
-  }
+  "devDependencies": {}
 }

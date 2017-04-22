@@ -3,6 +3,9 @@
     <a class="material-icons" @click="toggle">more_vert</a>
     <div ref="menu" class="mdc-simple-menu mdc-theme--text-primary-on-background" tabindex="-1">
       <ul class="mdc-simple-menu__items mdc-list" role="menu" aria-hidden="true">
+        <li @click="$router.push({ name: 'settings' })" class="mdc-list-item" role="menuitem" tabindex="0">
+          Settings
+        </li>
         <li @click="signOut" class="mdc-list-item" role="menuitem" tabindex="0">
           Sign Out
         </li>

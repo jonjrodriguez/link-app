@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import phone from 'phone';
 import TextField from '@/components/TextField';
 import Toolbar from '@/components/Toolbar';
 
@@ -64,12 +65,14 @@ export default {
 
   methods: {
     editContact() {
+      const e164 = phone(this.newContact.number);
+
       if (!this.newContact.name || !this.newContact.number) {
         this.error = 'Please enter a name and number.';
         return;
       }
 
-      this.$emit('save', this.newContact);
+      this.$emit('save', { ...this.newContact, e164: e164[0] });
     }
   }
 };
