@@ -67,20 +67,23 @@ export default {
   computed: {
     invitees() {
       return Object.entries(this.location.invitees)
-        .filter(invitee => invitee[1] === this.filter)
+        .filter(invitee => invitee[1].response === this.filter)
         .map(invitee => invitee[0]);
     },
 
     pendingCount() {
-      return Object.values(this.location.invitees).filter(invitee => invitee === '').length;
+      return Object.values(this.location.invitees)
+        .filter(invitee => invitee.response === '').length;
     },
 
     attendingCount() {
-      return Object.values(this.location.invitees).filter(invitee => invitee === true).length;
+      return Object.values(this.location.invitees)
+        .filter(invitee => invitee.response === true).length;
     },
 
     notAttendingCount() {
-      return Object.values(this.location.invitees).filter(invitee => invitee === false).length;
+      return Object.values(this.location.invitees)
+        .filter(invitee => invitee.response === false).length;
     }
   },
 

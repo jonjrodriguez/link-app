@@ -50,15 +50,15 @@ export default {
     },
 
     pendingCount() {
-      return Object.values(this.invitees).filter(invitee => invitee === '').length;
+      return Object.values(this.invitees).filter(invitee => invitee.response === '').length;
     },
 
     attendingCount() {
-      return Object.values(this.invitees).filter(invitee => invitee === true).length;
+      return Object.values(this.invitees).filter(invitee => invitee.response === true).length;
     },
 
     respondedCount() {
-      return Object.values(this.invitees).filter(invitee => invitee !== '').length;
+      return Object.values(this.invitees).filter(invitee => invitee.response !== '').length;
     }
   }
 };

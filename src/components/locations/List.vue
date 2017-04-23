@@ -81,7 +81,7 @@ export default {
     },
 
     respondedCount() {
-      return Object.values(this.location.invitees).filter(invitee => invitee !== '').length;
+      return Object.values(this.location.invitees).filter(invitee => invitee.response !== '').length;
     },
 
     deleteText() {

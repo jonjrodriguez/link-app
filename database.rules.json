@@ -1,6 +1,17 @@
 {
   "rules": {
     ".read": "auth != null",
-    ".write": "auth != null"
+    ".write": "auth != null",
+    "contacts": {
+      "$uid": {
+        ".indexOn": "e164"
+      }
+    },
+    "users": {
+      ".indexOn": "e164"
+    },
+    "latestInviteLocation": {
+      ".indexOn": ".value"
+    }
   }
 }

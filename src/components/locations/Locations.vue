@@ -37,12 +37,14 @@ export default {
       selectedContacts: [],
       transitionName: '',
       offset: 0,
-      loading: true
+      loading: true,
+      user: {}
     };
   },
 
   created() {
     const user = firebase.auth().currentUser;
+    this.user = user;
 
     this.db = firebase.database().ref(`locations/${user.uid}`);
     this.inviteeDb = firebase.database().ref(`invitees/${user.uid}`);
@@ -114,12 +116,18 @@ export default {
     },
 
     saveInvitees(key) {
-      const invitees = {};
+      const updates = {};
       this.selectedContacts.forEach((contact) => {
-        invitees[contact] = '';
+        updates[`invitees/${this.user.uid}/${key}/${contact}`] = {
+          response: '',
+          createdAt: firebase.database.ServerValue.TIMESTAMP,
+          updatedAt: firebase.database.ServerValue.TIMESTAMP
+        };
+
+        updates[`latestInviteLocation/${contact}`] = key;
       });
 
-      return this.inviteeDb.child(key).set(invitees);
+      return firebase.database().ref().update(updates);
     },
 
     toggleContact(key) {
@@ -133,6 +141,14 @@ export default {
     },
 
     deleteLocation(key) {
+      firebase.database().ref('latestInviteLocation').orderByValue().equalTo(key)
+        .once('value')
+        .then((snap) => {
+          snap.forEach((childSnap) => {
+            childSnap.ref.remove();
+          });
+        });
+
       this.inviteeDb.child(key).remove();
       this.db.child(key).remove();
     },
