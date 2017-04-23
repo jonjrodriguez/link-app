@@ -25,6 +25,18 @@
           <button type="submit" class="mdc-button mdc-button--primary mdc-button--raised">Save</button>
         </p>
       </form>
+
+      <form @submit.prevent="updatePassword" class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+        <text-field
+          v-model="password"
+          id="password"
+          label="New Password"
+          width="100%" />
+
+        <p>
+          <button type="submit" class="mdc-button mdc-button--primary mdc-button--raised">Update Password</button>
+        </p>
+      </form>
     </div>
   </Layout>
 </template>
@@ -45,6 +57,7 @@ export default {
     return {
       db: null,
       user: {},
+      password: '',
       error: {},
       success: '',
       loading: false
@@ -79,6 +92,27 @@ export default {
         .then(() => {
           this.loading = false;
           this.success = 'Profile saved.';
+        })
+        .catch((error) => {
+          this.loading = false;
+          this.error = error;
+        });
+    },
+
+    updatePassword() {
+      if (this.password === '') {
+        this.error = { message: 'Please enter a password.' };
+        return;
+      }
+
+      this.loading = true;
+
+      const user = firebase.auth().currentUser;
+      user.updatePassword(this.password)
+        .then(() => {
+          this.loading = false;
+          this.password = '';
+          this.success = 'Password updated';
         })
         .catch((error) => {
           this.loading = false;
