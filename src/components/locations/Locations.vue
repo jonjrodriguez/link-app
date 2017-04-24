@@ -74,6 +74,7 @@ export default {
 
   beforeDestroy() {
     this.db.off();
+    this.inviteeDb.off();
   },
 
   beforeRouteUpdate(to, from, next) {
