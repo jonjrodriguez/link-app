@@ -55,7 +55,7 @@ exports.confirmInvite = functions.https.onRequest((req, res) => {
 
   const from = req.body.From;
   const to = req.body.To;
-  const body = req.body.Body.toLowerCase().trim();
+  const body = req.body.Body;
 
   console.log(from, to, body);
 
@@ -87,11 +87,11 @@ function updateInvite(userKey, inviteeKey, locationKey, reply) {
   }
 
   let response = '';
-  if (reply === 'yes') {
+  if (positiveReply(reply)) {
     response = true;
   }
 
-  if (reply === 'no') {
+  if (negativeReply(reply)) {
     response = false;
   }
 
@@ -108,11 +108,11 @@ function updateInvite(userKey, inviteeKey, locationKey, reply) {
 
 function sendResponse(res, reply, locationKey) {
   let message = 'Sorry, just reply yes or no.';
-  if (reply === 'yes') {
+  if (positiveReply(reply)) {
     message = 'Ok, see you then.';
   }
 
-  if (reply === 'no') {
+  if (negativeReply(reply)) {
     message = 'Ok, maybe next time.';
   }
 
@@ -140,4 +140,20 @@ function formatBody(location, from, contact) {
   const time = moment(location.time).tz("America/New_York").calendar().toLowerCase();
 
   return `Hey ${contact.name}, it's ${from.name}. I'm going to ${location.place.name} ${time}. Wanna join? Just reply yes or no.`
+}
+
+function positiveReply(reply) {
+ const positive = ['yes', 'yeah', 'yah', 'yea', 'y', 'yess'];
+
+ reply = reply.toLowerCase().replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ").trim();
+
+ return positive.indexOf(reply) > -1;
+}
+
+function negativeReply(reply) {
+ const negative = ['no', 'nah', 'n', 'noo', 'nope', 'na'];
+
+ reply = reply.toLowerCase().replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ").trim();
+
+ return negative.indexOf(reply) > -1;
 }
