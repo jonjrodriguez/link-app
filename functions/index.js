@@ -139,7 +139,7 @@ function sendMessage(location, from, contact, cb) {
 function formatBody(location, from, contact) {
   const time = moment(location.time).tz("America/New_York").calendar().toLowerCase();
 
-  return `Hey ${contact.name}, it's ${from.name}. I'm going to ${location.place.name} ${time}. Wanna join? Just reply yes or no.`
+  return `Hey ${contact.name}, it's ${from.name}. I'm going to ${location.place.name} at ${location.place.formatted_address} ${time}. Wanna join? Just reply yes or no.`
 }
 
 function positiveReply(reply) {
